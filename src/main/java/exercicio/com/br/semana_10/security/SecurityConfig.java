@@ -15,12 +15,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll()   // Console H2
-                        .requestMatchers("/auth/**", "/login/**").permitAll() // Endpoints públicos
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")    // Apenas ADMIN
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/auth/**", "/login/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .httpBasic(); // Simples para testes com Postman
+                .httpBasic();
 
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
         return http.build();
