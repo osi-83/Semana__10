@@ -2,27 +2,51 @@ package exercicio.com.br.semana_10.controller;
 
 import exercicio.com.br.semana_10.entity.Organizacao;
 import exercicio.com.br.semana_10.repository.OrganizacaoRepository;
+import exercicio.com.br.semana_10.service.OrganizacaoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/organizacoes")
+@RequestMapping("/organizations")
 public class OrganizacaoController {
 
-    private final OrganizacaoRepository repository;
+    private final OrganizacaoService service;
 
-    public OrganizacaoController(OrganizacaoRepository repository) {
-        this.repository = repository;
+    public OrganizacaoController(OrganizacaoService service) {
+        this.service = service;
     }
 
-    @GetMapping
-    public List<Organizacao> listar() {
-        return repository.findAll();
-    }
-
+       //POst / organizations - criar (apenas ADMIN)
     @PostMapping
-    public Organizacao salvar(@RequestBody Organizacao organizacao) {
-        return repository.save(organizacao);
+    public ResponseEntity<Organizacao> criarOrganizacap(@RequestBody Organizacao organizacao) {
+        return ResponseEntity.ok(service.criarOrganizacao(organizacao));
+    }
+
+    // GET /organizations - listar (ADMIN e USER)
+    @GetMapping
+    public ResponseEntity<List<Organizacao>> listarOrganizacoes() {
+        return ResponseEntity.ok(service.listarOrganizacoes());
+    }
+
+    // GET /organizations/{id} - buscar por ID (ADMIN e USER)
+    @GetMapping("/{id}")
+    public ResponseEntity<Organizacao> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
+    // PUT /organizations/{id} - atualizar (apenas ADMIN)
+    @PutMapping("/{id}")
+    public ResponseEntity<Organizacao> atualizarOrganizacao(
+            @PathVariable Long id, @RequestBody Organizacao organizacaoAtualizada) {
+        return ResponseEntity.ok(service.atualizarOrganizacao(id, organizacaoAtualizada));
+    }
+
+    // DELETE /organizations/{id} - deletar (apenas ADMIN)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarOrganizacao(@PathVariable Long id) {
+        service.deletarOrganizacao(id);
+        return ResponseEntity.noContent().build();
     }
 }
