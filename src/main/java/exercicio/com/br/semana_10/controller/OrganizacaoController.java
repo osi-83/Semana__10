@@ -20,7 +20,7 @@ public class OrganizacaoController {
 
        //POst / organizations - criar (apenas ADMIN)
     @PostMapping
-    public ResponseEntity<Organizacao> criarOrganizacap(@RequestBody Organizacao organizacao) {
+    public ResponseEntity<Organizacao> criarOrganizacao(@RequestBody Organizacao organizacao) {
         return ResponseEntity.ok(service.criarOrganizacao(organizacao));
     }
 

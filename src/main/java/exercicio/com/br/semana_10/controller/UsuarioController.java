@@ -2,13 +2,14 @@ package exercicio.com.br.semana_10.controller;
 
 import exercicio.com.br.semana_10.entity.Usuario;
 import exercicio.com.br.semana_10.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/users")
 public class UsuarioController {
 
     private final UsuarioService service;
@@ -19,8 +20,8 @@ public class UsuarioController {
 
     // POST/users - criar novos usuários (apenas ADMIN tem acesso)
     @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
-        return ResponseEntity.ok(service.criarUsuario(usuario));
+    public ResponseEntity<Usuario> criarUsuario(@Valid @RequestBody Usuario usuario) {
+        return ResponseEntity.status(201).body(service.criarUsuario(usuario));
     }
 
     // GET /users - listar todos (apenas ADMIN tem acesso)
