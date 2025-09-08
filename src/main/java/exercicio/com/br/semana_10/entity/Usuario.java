@@ -33,3 +33,15 @@ public class Usuario {
         ADMIN, USER
     }
 }
+
+/*
+PGAdmin
+
+CREATE TABLE Usuario(
+	id BIGSERIAL PRIMARY KEY,
+	nome VARCHAR (30) NOT NULL,
+	username VARCHAR (30) UNIQUE NOT NULL,
+	senha VARCHAR (255) NOT NULL,
+	role VARCHAR (20) NOT NULL DEFAULT 'USER'
+);
+ */
